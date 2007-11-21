@@ -23,10 +23,8 @@ New Features
 Getting Started
 ===============
 
-* Overview and keybinding: `docs/overview.txt`_
-* List of features: `docs/index.txt`_
+* List of features: `docs/ropeide.txt`_
 * Tutorial: `docs/tutorial.txt`_
-* Contributing: `docs/contributing.txt`_
 
 To change rope IDE preferences like font edit your ``~/.ropeide``
 (which is created the first time you start rope).  To change your
@@ -55,7 +53,5 @@ This program is under the terms of GPL (GNU General Public License).
 Have a look at ``COPYING`` file for more information.
 
 
-.. _`docs/overview.txt`: docs/overview.html
 .. _`docs/tutorial.txt`: docs/tutorial.html
 .. _`docs/index.txt`: docs/index.html
-.. _`docs/contributing.txt`: docs/contributing.html

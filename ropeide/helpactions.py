@@ -5,7 +5,7 @@ import Tkinter
 
 import rope
 import ropeide.core
-from rope.base import project
+from rope.base import project, exceptions
 from ropeide.extension import SimpleAction
 from ropeide.menubar import MenuAddress
 
@@ -35,16 +35,22 @@ def show_about_dialog(context):
     toplevel.bind('<Return>', lambda event: ok())
 
 def show_doc(context, name):
-    rope_package = (os.path.dirname(sys.modules['ropeide'].__file__))
+    ropeide_path = (os.path.dirname(sys.modules['ropeide'].__file__))
+    rope_path = (os.path.dirname(sys.modules['rope'].__file__))
     # Checking whether rope is installed or not
     no_project = project.get_no_project()
-    if 'docs' in os.listdir(rope_package):
-        root = rope_package
-    else:
-        root = os.path.dirname(rope_package)
-    resource = no_project.get_resource(root + '/' + name)
+    resource = None
+    for root in [rope_path, ropeide_path,
+                 '.', os.path.join(rope_path, os.pardir)]:
+        try:
+            resource = no_project.get_resource(root + '/' + name)
+        except exceptions.RopeError:
+            continue
+    if resource is None:
+        raise exceptions.RopeError('Document %s was not found' % name)
     editor_manager = context.get_core().get_editor_manager()
     editor_manager.get_resource_editor(resource, readonly=True)
+
 
 def show_readme(context):
     show_doc(context, 'README.txt')

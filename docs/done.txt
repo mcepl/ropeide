@@ -9,24 +9,6 @@
 > Public Release 0.7 : November 1, 2007
 
 
-- ropemacs: moving elements, methods and modules : October 30, 2007
-
-
-- ropemacs: undoing refactorings : October 29, 2007
-
-
-- ropemacs: inline refactoring : October 29, 2007
-
-
-- ropemacs: extract method and local variable : October 29, 2007
-
-
-- ropemacs: goto definition : October 29, 2007
-
-
-- ropemacs: rename refactoring : October 29, 2007
-
-
 - A new open project dialog : October 10, 2007
 
 
