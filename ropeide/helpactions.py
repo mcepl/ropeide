@@ -56,7 +56,7 @@ def show_readme(context):
     show_doc(context, 'README.txt')
 
 def show_features(context):
-    show_doc(context, 'docs/index.txt')
+    show_doc(context, 'docs/rope.txt')
 
 def show_overview(context):
     show_doc(context, 'docs/overview.txt')
@@ -79,13 +79,13 @@ core.add_menu_cascade(MenuAddress(['Help'], 'h'), ['all', 'none'])
 actions = []
 
 actions.append(SimpleAction('readme', show_readme, 'C-h r',
-                            MenuAddress(['Help', 'Readme'], 'r')))
+                            MenuAddress(['Help', 'Ropeide Readme'], 'r')))
 actions.append(SimpleAction('features', show_features, 'C-h f',
-                            MenuAddress(['Help', 'Features'], 'f')))
+                            MenuAddress(['Help', 'Rope Features'], 'f')))
 actions.append(SimpleAction('overview', show_overview, 'C-h o',
-                            MenuAddress(['Help', 'Overview'], 'o')))
+                            MenuAddress(['Help', 'Rope Overview'], 'o')))
 actions.append(SimpleAction('tutorial', show_tutorial, 'C-h t',
-                            MenuAddress(['Help', 'Tutorial'], 't')))
+                            MenuAddress(['Help', 'Ropeide Tutorial'], 't')))
 
 actions.append(SimpleAction('contributing', show_contributing, 'C-h c',
                             MenuAddress(['Help', 'Contributing'], 'n', 1)))
@@ -94,7 +94,7 @@ actions.append(SimpleAction('library', show_library, 'C-h l',
                                         'l', 1)))
 
 actions.append(SimpleAction('about', show_about_dialog, 'C-h a',
-                            MenuAddress(['Help', 'About Rope'], 'a', 2)))
+                            MenuAddress(['Help', 'About Ropeide'], 'a', 2)))
 
 for action in actions:
     core.register_action(action)
