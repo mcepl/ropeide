@@ -54,4 +54,4 @@ Have a look at ``COPYING`` file for more information.
 
 
 .. _`docs/tutorial.txt`: docs/tutorial.html
-.. _`docs/index.txt`: docs/index.html
+.. _`docs/ropeide.txt`: docs/ropeide.html

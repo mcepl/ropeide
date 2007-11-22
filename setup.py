@@ -51,7 +51,7 @@ try:
           long_description=get_long_description(),
           author='Ali Gholami Rudi',
           author_email='aligrudi@users.sourceforge.net',
-          url='http://rope.sf.net/',
+          url='http://rope.sf.net/ropeide.html',
           packages=['ropeide'],
           package_data={'ropeide': ['docs/COPYING', 'docs/*.txt']},
           scripts=['scripts/ropeide'],
