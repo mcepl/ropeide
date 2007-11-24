@@ -68,7 +68,8 @@ Features
 Source Repository
 =================
 
-Rope uses Mercurial_ VCS at http://rope.sourceforge.net/hg/ropeide .
+Ropeide Mercurial_ repository:
+  http://rope.sourceforge.net/hg/ropeide
 
 
 Feedback
@@ -81,7 +82,7 @@ googlegroups.com`_.
 License
 =======
 
-rope is under the terms of GNU GPL (GNU General Public License).
+Ropeide is under the terms of GNU GPL (GNU General Public License).
 
 .. _project download page: http://sf.net/projects/rope/files
 .. _`rope-dev (at) googlegroups.com`: http://groups.google.com/group/rope-dev

@@ -13,16 +13,22 @@ def make_temps():
     # copying docs
     if not os.path.exists('ropeide/docs'):
         os.mkdir('ropeide/docs')
-    docs = ['README.txt', 'COPYING']
-    docs.extend(glob.glob('docs/*.txt'))
+    docs = glob.glob('docs/*.txt')
     for name in docs:
         shutil.copy(name, 'ropeide/docs/')
+    for name in ['COPYING', 'README.txt']:
+        shutil.copy(name, 'ropeide/')
 
 def remove_temps():
     if os.path.exists('scripts'):
         shutil.rmtree('scripts')
     if os.path.exists('ropeide/docs'):
         shutil.rmtree('ropeide/docs')
+    for name in ['README.txt', 'COPYING']:
+        path = os.path.join('ropeide', name)
+        if os.path.exists(path):
+            os.remove(path)
+
 
 classifiers=[
     'Development Status :: 4 - Beta',
@@ -53,7 +59,7 @@ try:
           author_email='aligrudi@users.sourceforge.net',
           url='http://rope.sf.net/ropeide.html',
           packages=['ropeide'],
-          package_data={'ropeide': ['docs/COPYING', 'docs/*.txt']},
+          package_data={'ropeide': ['COPYING', 'README.txt', 'docs/*.txt']},
           scripts=['scripts/ropeide'],
           license='GNU GPL',
           classifiers=classifiers)
