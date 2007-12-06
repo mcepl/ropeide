@@ -99,7 +99,7 @@ class PythonCodeIndenter(TextIndenter):
         return new_indent
 
     def _get_base_indentation(self, lineno):
-        range_finder = codeanalyze.StatementRangeFinder(
+        range_finder = _StatementRangeFinder(
             self.line_editor, self._last_non_blank(lineno))
         start = range_finder.get_statement_start()
         if not range_finder.is_line_continued():
@@ -165,3 +165,68 @@ class PythonCodeIndenter(TextIndenter):
     def correct_indentation(self, lineno):
         """Correct the indentation of the line containing the given index"""
         self._set_line_indents(lineno, self._get_correct_indentation(lineno))
+
+
+class _StatementRangeFinder(object):
+    """A method object for finding the range of a statement"""
+
+    def __init__(self, lines, lineno):
+        self.lines = lines
+        self.lineno = lineno
+        self.in_string = ''
+        self.open_count = 0
+        self.explicit_continuation = False
+        self.open_parens = []
+        self._analyze()
+
+    def _analyze_line(self, current_line_number):
+        current_line = self.lines.get_line(current_line_number)
+        for i, char in enumerate(current_line):
+            if char in '\'"':
+                if self.in_string == '':
+                    self.in_string = char
+                    if char * 3 == current_line[i:i + 3]:
+                        self.in_string = char * 3
+                elif self.in_string == current_line[i:i + len(self.in_string)] and \
+                     not (i > 0 and current_line[i - 1] == '\\' and
+                          not (i > 1 and current_line[i - 2:i] == '\\\\')):
+                    self.in_string = ''
+            if self.in_string != '':
+                continue
+            if char == '#':
+                break
+            if char in '([{':
+                self.open_count += 1
+                self.open_parens.append((current_line_number, i))
+            if char in ')]}':
+                self.open_count -= 1
+                if self.open_parens:
+                    self.open_parens.pop()
+        if current_line and char != '#' and current_line.endswith('\\'):
+            self.explicit_continuation = True
+        else:
+            self.explicit_continuation = False
+
+    def _analyze(self):
+        last_statement = 1
+        block_start = codeanalyze.get_block_start(self.lines, self.lineno)
+        for current_line_number in range(block_start, self.lineno + 1):
+            if not self.explicit_continuation and \
+               self.open_count == 0 and self.in_string == '':
+                last_statement = current_line_number
+            self._analyze_line(current_line_number)
+        self.statement_start = last_statement
+
+    def get_statement_start(self):
+        return self.statement_start
+
+    def last_open_parens(self):
+        if not self.open_parens:
+            return None
+        return self.open_parens[-1]
+
+    def is_line_continued(self):
+        return self.open_count != 0 or self.explicit_continuation
+
+    def get_line_indents(self, line_number):
+        return count_line_indents(self.lines.get_line(line_number))
