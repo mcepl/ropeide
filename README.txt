@@ -19,6 +19,23 @@ You should install `rope`_ library before using this IDE.
 New Features
 ============
 
+* Asking the user about unsure occurrences
+* Not using the deprecated ``PyCore.create_(module|package)()``
+* Not using `rope.base.codeanalyze.StatementRangeFinder`
+
+Ropeide has jumped from release ``0.7`` to ``1.4``; I've changed the
+release number to indicate that ropeide and rope has been devided into
+two separate projects.
+
+In rename refactoring dialog, you could choose what to do about unsure
+occurrences; either match or ignore all of them.  This release adds a
+new value called ask.  If you select this, you'll be asked to decide
+whether each unsure occurrence is a match or not. (Suggested by Alon
+Levy in the mailing list).
+
+Also showing help files when rope is installed was fixed. (Reported by
+Matsui Tetsushi).
+
 
 Getting Started
 ===============
