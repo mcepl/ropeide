@@ -37,5 +37,3 @@ TODO
 * Better warnings
 * View type hierarchy
 * Generate ~/.rope graphically
-
-> Public Release ? : December 13
