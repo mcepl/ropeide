@@ -16,7 +16,7 @@ class Statements(object):
         lineno = self.lines.get_line_number(offset)
         if offset == self.lines.get_line_end(lineno):
             lineno = self._next_nonblank(lineno, 1)
-        start, end = self.logical_lines.get_logical_line_in(lineno)
+        start, end = self.logical_lines.logical_line_in(lineno)
         end_offset = self.lines.get_line_end(end)
         return end_offset
 
@@ -28,7 +28,7 @@ class Statements(object):
             diff = self.source[self.lines.get_line_start(lineno):offset]
             if not diff.strip():
                 lineno = self._next_nonblank(lineno, -1)
-        start, end = self.logical_lines.get_logical_line_in(lineno)
+        start, end = self.logical_lines.logical_line_in(lineno)
         start_offset = self.lines.get_line_start(start)
         return _next_char(self.source, start_offset)
 
