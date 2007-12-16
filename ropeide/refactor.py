@@ -230,7 +230,9 @@ class ExtractDialog(RefactoringDialog):
         self.kind = kind
 
     def _get_changes(self):
-        return self.do_extract(self.new_name_entry.get(), self.similar.get())
+        return self.do_extract(self.new_name_entry.get(),
+                               similar=self.similar.get(),
+                               global_=self.global_.get())
 
     def _get_dialog_frame(self):
         frame = Tkinter.Frame(self.toplevel)
@@ -246,6 +248,12 @@ class ExtractDialog(RefactoringDialog):
             frame, text='Extract similar expressions/statements',
             variable=self.similar)
         similar.grid(row=1, column=0, columnspan=2, sticky=Tkinter.W)
+        self.global_ = Tkinter.IntVar()
+        self.global_.set(0)
+        global_ = Tkinter.Checkbutton(
+            frame, text='Make the extracted %s global' % self.kind,
+            variable=self.global_)
+        global_.grid(row=2, column=0, columnspan=2, sticky=Tkinter.W)
 
         self.new_name_entry.bind('<Return>', lambda event: self._ok())
         self.new_name_entry.focus_set()
@@ -253,21 +261,21 @@ class ExtractDialog(RefactoringDialog):
 
 
 def extract_method(context):
-    def do_extract(new_name, similar):
+    def do_extract(new_name, similar, global_):
         resource = context.resource
         start_offset, end_offset = context.region
         return rope.refactor.extract.ExtractMethod(
             context.project, resource, start_offset,
-            end_offset).get_changes(new_name, similar=similar)
+            end_offset).get_changes(new_name, similar=similar, global_=global_)
     ExtractDialog(context, do_extract, 'Method').show()
 
 def extract_variable(context):
-    def do_extract(new_name, similar):
+    def do_extract(new_name, similar, global_):
         resource = context.get_active_editor().get_file()
         start_offset, end_offset = context.region
         return rope.refactor.extract.ExtractVariable(
             context.project, resource, start_offset,
-            end_offset).get_changes(new_name, similar=similar)
+            end_offset).get_changes(new_name, similar=similar, global_=global_)
     ExtractDialog(context, do_extract, 'Variable').show()
 
 
@@ -712,13 +720,13 @@ class InlineDialog(RefactoringDialog):
         remove = Tkinter.Checkbutton(frame, text='Remove the definition',
                                      variable=self.remove)
         self.remove.set(1)
-        remove.grid(row=1)
+        remove.grid(row=1, sticky=Tkinter.W)
         self.only_current = Tkinter.IntVar()
         only_current = Tkinter.Checkbutton(
             frame, text='Only inline the current occurrence',
             variable=self.only_current)
         self.only_current.set(0)
-        only_current.grid(row=2)
+        only_current.grid(row=2, sticky=Tkinter.W)
         return frame
 
 

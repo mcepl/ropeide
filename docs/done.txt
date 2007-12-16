@@ -3,6 +3,12 @@
 ===========
 
 
+- Supporting global_ option for extract refactoring : December 16
+
+
+- Supporting only_current option for inline refactoring : December 16
+
+
 > Public Release 1.4 : December 13
 
 
