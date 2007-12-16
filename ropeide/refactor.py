@@ -699,6 +699,7 @@ class InlineDialog(RefactoringDialog):
 
     def _calculate_changes(self, handle):
         return self.inliner.get_changes(remove=self.remove.get(),
+                                        only_current=self.only_current.get(),
                                         task_handle=handle)
 
     def _get_dialog_frame(self):
@@ -712,6 +713,12 @@ class InlineDialog(RefactoringDialog):
                                      variable=self.remove)
         self.remove.set(1)
         remove.grid(row=1)
+        self.only_current = Tkinter.IntVar()
+        only_current = Tkinter.Checkbutton(
+            frame, text='Only inline the current occurrence',
+            variable=self.only_current)
+        self.only_current.set(0)
+        only_current.grid(row=2)
         return frame
 
 
