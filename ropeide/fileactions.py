@@ -4,6 +4,7 @@ import Tkinter
 import tkFileDialog
 
 import rope.base.project
+from rope.contrib import generate
 import ropeide.actionhelpers
 import ropeide.core
 from ropeide import uihelpers, tkhelpers
@@ -151,17 +152,16 @@ def create_folder(context):
 
 def create_module(context):
     def do_create_module(source_folder, module_name):
-        new_module = context.get_core().project.get_pycore().\
-                     create_module(source_folder, module_name)
+        new_module = generate.create_module(
+                     context.project, module_name, source_folder)
         context.get_core().editor_manager.get_resource_editor(new_module)
     _create_resource_dialog(context.get_core(), do_create_module,
                             'Module', 'Source Folder')
 
 def create_package(context):
     def do_create_package(source_folder, package_name):
-        new_package = context.get_core().project.get_pycore().\
-                      create_package(source_folder,
-                                     package_name)
+        new_package = generate.create_package(
+                     context.project, package_name, source_folder)
         context.get_core().editor_manager.get_resource_editor(new_package.get_child('__init__.py'))
     _create_resource_dialog(context.get_core(), do_create_package, 'Package', 'Source Folder')
 
