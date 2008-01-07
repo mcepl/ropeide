@@ -1,6 +1,6 @@
 import rope.base.exceptions
 import ropeide.uihelpers
-from rope.base.project import ResourceObserver, FilteredResourceObserver
+from rope.base.resourceobserver import ResourceObserver, FilteredResourceObserver
 from ropeide import editingcontexts
 
 
