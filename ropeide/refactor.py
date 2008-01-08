@@ -857,21 +857,19 @@ class RestructureDialog(RefactoringDialog):
         self._save_data()
         pattern = self.pattern.get('1.0', 'end-1c')
         goal = self.goal.get('1.0', 'end-1c')
-        restructuring = rope.refactor.restructure.Restructure(
-            self.project, pattern, goal)
         imports = [line for line in self.imports.get('1.0', 'end').splitlines()
                    if line.strip]
-        string_checks = self._get_checks_dict()
-        checks = restructuring.make_checks(string_checks)
-        return restructuring.get_changes(checks, imports=imports,
-                                         task_handle=handle)
+        args = self._get_args_dict()
+        restructuring = rope.refactor.restructure.Restructure(
+            self.project, pattern, goal, args=args, imports=imports)
+        return restructuring.get_changes(task_handle=handle)
 
-    def _get_checks_dict(self):
-        checks = self.checks.get('1.0', 'end').splitlines()
+    def _get_args_dict(self):
+        checks = self.args.get('1.0', 'end').splitlines()
         result = {}
         for check in checks:
-            if '==' in check:
-                splitted = check.split('==')
+            if ':' in check:
+                splitted = check.split(':', 1)
                 name = splitted[0].strip()
                 value = splitted[1].strip()
                 result[name] = value
@@ -886,8 +884,8 @@ class RestructureDialog(RefactoringDialog):
 
         patterns_help = \
             'Rope searches for `pattern` in the project and replaces its\n' \
-            'occurrences with `goal`.  They can contain ``${?name}`` and \n' \
-            '``${name}`` wildcards.  See ``docs/overview.txt`` for examples.'
+            'occurrences with `goal`.  They can contain ``${name}``\n' \
+            'wildcards.  See ``docs/overview.txt`` for examples.'
         goals_help = \
             'Pieces of code that match the pattern will be replaced\n' \
             'with goal.  It can contain the wildcards that appear in the\n' \
@@ -902,16 +900,16 @@ class RestructureDialog(RefactoringDialog):
         # Handling checks
         checks_frame = Tkinter.Frame(frame, borderwidth=1,
                                      relief=Tkinter.RIDGE)
-        checks_help = 'Add checks here; One each line.  Like:\n' \
-                      '  ?var.type == mymod.AClass\n' \
-                      '\nUse __builtin__ module for builtins'
-        checks_label = Tkinter.Label(checks_frame, text='Checks',
-                                     justify=Tkinter.LEFT, width=70)
-        checks_label.grid(row=0)
-        self.checks = Tkinter.Text(checks_frame, height=4, width=70)
-        self.checks.grid(row=1)
+        args_help = 'Add args here; One each line.  Like:\n' \
+                    '  var: type=mymod.AClass\n' \
+                    '\nUse __builtin__ module for builtins'
+        args_label = Tkinter.Label(checks_frame, text='Arguments',
+                                   justify=Tkinter.LEFT, width=70)
+        args_label.grid(row=0)
+        self.args = Tkinter.Text(checks_frame, height=4, width=70)
+        self.args.grid(row=1)
         checks_frame.grid(row=2, columnspan=2)
-        tkhelpers.ToolTip(self.checks, checks_help)
+        tkhelpers.ToolTip(self.args, args_help)
 
         # Handling Imports
         imports_frame = Tkinter.Frame(frame, borderwidth=1,
@@ -931,14 +929,14 @@ class RestructureDialog(RefactoringDialog):
         return frame
 
     def _remove_check(self):
-        self.checks.remove_entry()
+        self.args.remove_entry()
 
     history = None
 
     def _save_data(self):
         data = {'pattern': self.pattern.get('1.0', 'end'),
                 'goal': self.goal.get('1.0', 'end'),
-                'checks': self.checks.get('1.0', 'end'),
+                'checks': self.args.get('1.0', 'end'),
                 'imports': self.imports.get('1.0', 'end')}
         RestructureDialog.history = data
 
@@ -947,7 +945,7 @@ class RestructureDialog(RefactoringDialog):
             data = RestructureDialog.history
             self.pattern.insert('1.0', data['pattern'])
             self.goal.insert('1.0', data['goal'])
-            self.checks.insert('1.0', data['checks'])
+            self.args.insert('1.0', data['checks'])
             self.imports.insert('1.0', data['imports'])
 
 
