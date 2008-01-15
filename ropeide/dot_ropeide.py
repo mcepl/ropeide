@@ -45,6 +45,10 @@ def starting_rope(core):
     #core.set('action_prefix', 'C-u')
 
 
+    # The maximum number of errors to fix if the code has errors when
+    # proposing code-assist completions.
+    core.set('codeassist_maxfixes', 1)
+
     # Add your python templates
     core.add('templates', ('say_hello', "print 'Hello, my name is ${name}'\n"))
     core.add('templates', ('set_field', "self.${field}${cursor} = ${field}\n"))

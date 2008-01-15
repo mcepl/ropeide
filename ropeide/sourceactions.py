@@ -96,9 +96,10 @@ class DoCodeAssist(object):
         editor = context.get_active_editor().get_editor()
         source = editor.get_text()
         offset = editor.get_current_offset()
+        maxfixes = context.core.get_prefs().get('codeassist_maxfixes', 1)
         result = rope.contrib.codeassist.code_assist(
             context.project, source, offset, context.resource,
-            templates=self._get_templates(context))
+            templates=self._get_templates(context), maxfixes=maxfixes)
         proposals = rope.contrib.codeassist.sorted_proposals(result)
         start_offset = rope.contrib.codeassist.starting_offset(source, offset)
         toplevel = Tkinter.Toplevel()
