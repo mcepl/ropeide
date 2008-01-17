@@ -3,6 +3,9 @@
 ===========
 
 
+> Public Release 1.5 : January 17, 2008
+
+
 - Added codeassist_maxfixes config : January 15, 2008
 
 

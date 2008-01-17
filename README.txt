@@ -19,21 +19,16 @@ You should install `rope`_ library before using this IDE.
 New Features
 ============
 
-* Asking the user about unsure occurrences
-* Not using the deprecated ``PyCore.create_(module|package)()``
+* Added ``codeassist_maxfixes`` config
+* Supporting ``global_`` option in extract refactorings
+* Supporting ``only_current`` option for inline refactoring
 
-Ropeide has jumped from release ``0.7`` to ``1.4``; I've changed the
-release number to indicate that ropeide and rope has been devided into
-two separate projects.
+``codeassist_maxfixes`` can be used to set the maximum number of
+syntax errors to fix before showing code-assist proposals.  This
+option can be set in the ``~/.ropeide`` file like::
 
-In rename refactoring dialog, you could choose what to do about unsure
-occurrences; either match or ignore all of them.  This release adds a
-new value called ask.  If you select this, you'll be asked to decide
-whether each unsure occurrence is a match or not. (Suggested by Alon
-Levy in the mailing list).
-
-Also showing help files when ropeide is installed was fixed. (Reported
-by Matsui Tetsushi).
+  # inside `starting_rope` function
+  core.set('codeassist_maxfixes', 2)
 
 
 Getting Started
