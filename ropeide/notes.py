@@ -49,7 +49,7 @@ class Warnings(object):
 
     def _find_self_assignments(self, node, source):
         result = []
-        finder = similarfinder.SimilarFinder(source, node)
+        finder = similarfinder.RawSimilarFinder(source, node)
         lines = codeanalyze.SourceLinesAdapter(source)
         for self_assignment in finder.get_matches('${?a} = ${?a}'):
             region = patchedast.node_region(self_assignment.get_ast('?a'))
