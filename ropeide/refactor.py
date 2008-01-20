@@ -858,7 +858,7 @@ class RestructureDialog(RefactoringDialog):
         pattern = self.pattern.get('1.0', 'end-1c')
         goal = self.goal.get('1.0', 'end-1c')
         imports = [line for line in self.imports.get('1.0', 'end').splitlines()
-                   if line.strip]
+                   if line.strip()]
         args = self._get_args_dict()
         restructuring = rope.refactor.restructure.Restructure(
             self.project, pattern, goal, args=args, imports=imports)
