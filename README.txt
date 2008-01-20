@@ -19,17 +19,6 @@ You should install `rope`_ library before using this IDE.
 New Features
 ============
 
-* Added ``codeassist_maxfixes`` config
-* Supporting ``global_`` option in extract refactorings
-* Supporting ``only_current`` option for inline refactoring
-
-``codeassist_maxfixes`` can be used to set the maximum number of
-syntax errors to fix before showing code-assist proposals.  This
-option can be set in the ``~/.ropeide`` file like::
-
-  # inside `starting_rope` function
-  core.set('codeassist_maxfixes', 2)
-
 
 Getting Started
 ===============

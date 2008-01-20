@@ -37,3 +37,5 @@ TODO
 * Better warnings
 * View type hierarchy
 * Generate ~/.rope graphically
+
+> Public Release 1.6
