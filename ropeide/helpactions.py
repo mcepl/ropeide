@@ -1,3 +1,4 @@
+import inspect
 import os.path
 import sys
 
@@ -35,15 +36,19 @@ def show_about_dialog(context):
     toplevel.bind('<Return>', lambda event: ok())
 
 def show_doc(context, name):
-    ropeide_path = (os.path.dirname(sys.modules['ropeide'].__file__))
-    rope_path = (os.path.dirname(sys.modules['rope'].__file__))
+    ropeide_path = os.path.dirname(inspect.getsourcefile(ropeide))
+    rope_path = os.path.dirname(inspect.getsourcefile(rope))
     # Checking whether rope is installed or not
     no_project = project.get_no_project()
     resource = None
-    for root in [rope_path, ropeide_path,
-                 '.', os.path.join(rope_path, os.pardir)]:
+    def parent(path):
+        return os.path.join(path, os.pardir)
+    paths = [rope_path, ropeide_path,
+             parent(ropeide_path), parent(rope_path), '.']
+    for root in paths:
         try:
             resource = no_project.get_resource(root + '/' + name)
+            break
         except exceptions.RopeError:
             continue
     if resource is None:
