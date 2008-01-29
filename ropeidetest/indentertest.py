@@ -301,6 +301,12 @@ class PythonCodeIndenterTest(unittest.TestCase):
         self.assertEquals('if False: # comments\n    pass',
                           self.editor.get_text())
 
+    def test_returns_with_no_args(self):
+        self.editor.set_text('def f():\n    return\n    var = 1\n')
+        self.indenter.correct_indentation(3)
+        self.assertEquals('def f():\n    return\nvar = 1\n',
+                          self.editor.get_text())
+
     def get_range_finder(self, code, line):
         result = _StatementRangeFinder(
             codeanalyze.ArrayLinesAdapter(code.split('\n')), line)

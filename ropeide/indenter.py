@@ -140,8 +140,8 @@ class PythonCodeIndenter(TextIndenter):
             new_indent += self.indents
         if last_line.strip() == 'pass':
             new_indent -= self.indents
-        if first_line.lstrip().startswith('return ') or \
-           first_line.lstrip().startswith('raise '):
+        if first_line.lstrip().startswith('return') or \
+           first_line.lstrip().startswith('raise'):
             new_indent -= self.indents
         if first_line.strip() == 'break':
             new_indent -= self.indents
