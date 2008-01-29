@@ -202,6 +202,7 @@ def _change_to_nonemacs_keybinding(core):
     core.rebind_action('move', 'M-V')
     core.rebind_action('extract_method', 'M-M')
     core.rebind_action('inline', 'M-I')
+    core.rebind_action('usefunction', None)
     core.rebind_action('extract_local_variable', 'M-L')
     core.rebind_action('rename_in_file', None)
     core.rebind_action('change_signature', 'M-C')

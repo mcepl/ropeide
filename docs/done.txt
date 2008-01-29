@@ -3,6 +3,9 @@
 ===========
 
 
+- Added usefunction refactoring : January 29, 2008
+
+
 > Public Release 1.5 : January 17, 2008
 
 

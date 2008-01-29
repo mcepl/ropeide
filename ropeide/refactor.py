@@ -733,6 +733,30 @@ class InlineDialog(RefactoringDialog):
 def inline(context):
     InlineDialog(context).show()
 
+class UseFunctionDialog(RefactoringDialog):
+
+    def __init__(self, context):
+        self.user = rope.refactor.usefunction.UseFunction(
+            context.project, context.resource, context.offset)
+        super(UseFunctionDialog, self).__init__(
+            context, 'Using Function <%s>' %
+            self.user.get_function_name())
+
+    def _calculate_changes(self, handle):
+        return self.user.get_changes(task_handle=handle)
+
+    def _get_dialog_frame(self):
+        frame = Tkinter.Frame(self.toplevel)
+        label = Tkinter.Label(frame, text='Using Function <%s>' %
+                              self.user.get_function_name(), width=50)
+        label.grid(row=1)
+        frame.grid()
+        return frame
+
+
+def usefunction(context):
+    UseFunctionDialog(context).show()
+
 
 def encapsulate_field(context):
     if context.get_active_editor():
@@ -967,6 +991,9 @@ actions.append(SimpleAction('move', ConfirmEditorsAreSaved(move), 'C-c r v',
                             MenuAddress(['Refactor', 'Move'], 'v'), ['python']))
 actions.append(SimpleAction('inline', ConfirmEditorsAreSaved(inline), 'C-c r i',
                             MenuAddress(['Refactor', 'Inline'], 'i'), ['python']))
+actions.append(SimpleAction(
+               'usefunction', ConfirmEditorsAreSaved(usefunction), 'C-c r u',
+               MenuAddress(['Refactor', 'UseFunction'], 'u'), ['python']))
 actions.append(SimpleAction('extract_local_variable',
                             ConfirmEditorsAreSaved(extract_variable, all=False), 'C-c r l',
                             MenuAddress(['Refactor', 'Extract Local Variable'], 'l'), ['python']))
