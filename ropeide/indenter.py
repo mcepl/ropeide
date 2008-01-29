@@ -138,38 +138,42 @@ class PythonCodeIndenter(TextIndenter):
         new_indent = 0
         if self._strip(last_line).endswith(':'):
             new_indent += self.indents
-        if last_line.strip() == 'pass':
+        if self._strip(last_line) == 'pass':
             new_indent -= self.indents
-        if first_line.lstrip().startswith('return') or \
-           first_line.lstrip().startswith('raise'):
+        if self._startswith(first_line, ('return', 'raise')):
             new_indent -= self.indents
-        if first_line.strip() == 'break':
+        if self._strip(first_line) == 'break':
             new_indent -= self.indents
-        if first_line.strip() == 'continue':
+        if self._strip(first_line) == 'continue':
             new_indent -= self.indents
         return new_indent
 
+    def _startswith(self, line, tokens):
+        line = self._strip(line)
+        for token in tokens:
+            if line == token or line.startswith(token + ' '):
+                return True
+
     def _strip(self, line):
-        result = line
         try:
-            numsign = result.rindex('#')
-            comment = result[numsign:]
+            numsign = line.rindex('#')
+            comment = line[numsign:]
             if '\'' not in comment and '\"' not in comment:
-                result = result[:numsign]
+                line = line[:numsign]
         except ValueError:
             pass
-        return result.strip()
+        return line.strip()
 
     def _indents_caused_by_current_stmt(self, current_line):
         new_indent = 0
-        if current_line.strip() == 'else:':
+        if self._strip(current_line) == 'else:':
             new_indent -= self.indents
-        if current_line.strip() == 'finally:':
+        if self._strip(current_line) == 'finally:':
             new_indent -= self.indents
-        if current_line.strip().startswith('elif '):
+        if self._startswith(current_line, ('elif',)):
             new_indent -= self.indents
-        if current_line.lstrip().startswith('except ') and \
-           current_line.rstrip().endswith(':'):
+        if self._startswith(current_line, ('except',)) and \
+           self._strip(current_line).endswith(':'):
             new_indent -= self.indents
         return new_indent
 
