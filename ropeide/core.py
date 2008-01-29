@@ -326,7 +326,8 @@ class Core(object):
     def close_project(self):
         while self.editor_manager.active_editor is not None:
             self.close_active_editor()
-        self.project.close()
+        if hasattr(self.project, 'close'):
+            self.project.close()
         self.registers.project_closed()
         self.project = get_no_project()
 
