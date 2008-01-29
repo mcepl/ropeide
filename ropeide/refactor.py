@@ -739,8 +739,13 @@ class UseFunctionDialog(RefactoringDialog):
         self.user = rope.refactor.usefunction.UseFunction(
             context.project, context.resource, context.offset)
         super(UseFunctionDialog, self).__init__(
-            context, 'Using Function <%s>' %
-            self.user.get_function_name())
+            context, 'Using Function <%s>' % self._name())
+
+    def _name(self):
+        if hasattr(self.user, 'get_function_name'):
+            return self.user.get_function_name()
+        else:
+            return self.user.pyfunction.get_name()
 
     def _calculate_changes(self, handle):
         return self.user.get_changes(task_handle=handle)
@@ -748,7 +753,7 @@ class UseFunctionDialog(RefactoringDialog):
     def _get_dialog_frame(self):
         frame = Tkinter.Frame(self.toplevel)
         label = Tkinter.Label(frame, text='Using Function <%s>' %
-                              self.user.get_function_name(), width=50)
+                              self._name(), width=50)
         label.grid(row=1)
         frame.grid()
         return frame
