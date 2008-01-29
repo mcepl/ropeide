@@ -138,13 +138,8 @@ class PythonCodeIndenter(TextIndenter):
         new_indent = 0
         if self._strip(last_line).endswith(':'):
             new_indent += self.indents
-        if self._strip(last_line) == 'pass':
-            new_indent -= self.indents
-        if self._startswith(first_line, ('return', 'raise')):
-            new_indent -= self.indents
-        if self._strip(first_line) == 'break':
-            new_indent -= self.indents
-        if self._strip(first_line) == 'continue':
+        if self._startswith(first_line, ('return', 'raise', 'pass',
+                                         'break', 'continue')):
             new_indent -= self.indents
         return new_indent
 
@@ -194,8 +189,8 @@ class _StatementRangeFinder(object):
         self.open_parens = []
         self._analyze()
 
-    def _analyze_line(self, current_line_number):
-        current_line = self.lines.get_line(current_line_number)
+    def _analyze_line(self, lineno):
+        current_line = self.lines.get_line(lineno)
         for i, char in enumerate(current_line):
             if char in '\'"':
                 if self.in_string == '':
@@ -212,7 +207,7 @@ class _StatementRangeFinder(object):
                 break
             if char in '([{':
                 self.open_count += 1
-                self.open_parens.append((current_line_number, i))
+                self.open_parens.append((lineno, i))
             if char in ')]}':
                 self.open_count -= 1
                 if self.open_parens:
