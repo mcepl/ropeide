@@ -136,7 +136,7 @@ class PythonCodeIndenter(TextIndenter):
         first_line = self.line_editor.get_line(stmt_range[0])
         last_line = self.line_editor.get_line(stmt_range[1])
         new_indent = 0
-        if last_line.rstrip().endswith(':'):
+        if self._strip(last_line).endswith(':'):
             new_indent += self.indents
         if last_line.strip() == 'pass':
             new_indent -= self.indents
@@ -148,6 +148,17 @@ class PythonCodeIndenter(TextIndenter):
         if first_line.strip() == 'continue':
             new_indent -= self.indents
         return new_indent
+
+    def _strip(self, line):
+        result = line
+        try:
+            numsign = result.rindex('#')
+            comment = result[numsign:]
+            if '\'' not in comment and '\"' not in comment:
+                result = result[:numsign]
+        except ValueError:
+            pass
+        return result.strip()
 
     def _indents_caused_by_current_stmt(self, current_line):
         new_indent = 0

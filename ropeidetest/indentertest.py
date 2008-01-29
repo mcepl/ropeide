@@ -292,7 +292,14 @@ class PythonCodeIndenterTest(unittest.TestCase):
     def test_line_break_after_inner_parens(self):
         self.editor.set_text('a_func(a_func(\na_var)')
         self.indenter.correct_indentation(2)
-        self.assertEquals('a_func(a_func(\n       a_var)', self.editor.get_text())
+        self.assertEquals('a_func(a_func(\n       a_var)',
+                          self.editor.get_text())
+
+    def test_comments_after_colon(self):
+        self.editor.set_text('if False: # comments\npass')
+        self.indenter.correct_indentation(2)
+        self.assertEquals('if False: # comments\n    pass',
+                          self.editor.get_text())
 
     def get_range_finder(self, code, line):
         result = _StatementRangeFinder(
@@ -318,6 +325,10 @@ class PythonCodeIndenterTest(unittest.TestCase):
     def test_is_line_continued(self):
         finder = self.get_range_finder('a = 10', 1)
         self.assertFalse(finder.is_line_continued())
+
+    def test_is_line_continued2(self):
+        finder = self.get_range_finder('a = (10 +', 1)
+        self.assertTrue(finder.is_line_continued())
 
     def test_is_line_continued2(self):
         finder = self.get_range_finder('a = (10 +', 1)
