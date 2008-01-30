@@ -39,3 +39,6 @@ TODO
 * Generate ~/.rope graphically
 
 > Public Release 1.6
+
+* auto-importing names
+* using resources parameter of refactorings
