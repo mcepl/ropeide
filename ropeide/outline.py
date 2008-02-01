@@ -19,6 +19,17 @@ class PythonASTOutlineNode(object):
             self.children = _get_ast_children(self.node)
         return self.children
 
+    def get_kind(self):
+        """Return the type of this node
+
+        Returns 'function' for functions can 'class' for classes.
+
+        """
+        if isinstance(self.node, ast.FunctionDef):
+            return 'function'
+        if isinstance(self.node, ast.ClassDef):
+            return 'class'
+
     def __cmp__(self, obj):
         return cmp(self.get_line_number(), obj.get_line_number())
 

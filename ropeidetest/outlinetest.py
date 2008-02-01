@@ -27,7 +27,8 @@ class OutlineTest(unittest.TestCase):
         self.assertEquals(0, len(nodes[0].get_children()))
 
     def test_nested_outlines(self):
-        nodes = self.outline.get_root_nodes('class Sample(object):\n    def a_method(self):\n        pass\n')
+        nodes = self.outline.get_root_nodes(
+            'class Sample(object):\n    def a_method(self):\n        pass\n')
         self.assertEquals(1, len(nodes))
         self.assertEquals('Sample', nodes[0].get_name())
         sample_class = nodes[0]
@@ -38,7 +39,8 @@ class OutlineTest(unittest.TestCase):
         self.assertEquals(2, a_method.get_line_number())
 
     def test_sorting_by_line_number(self):
-        nodes = self.outline.get_root_nodes('def a_func2():\n    pass\ndef a_func1():\n    pass\n')
+        nodes = self.outline.get_root_nodes(
+            'def a_func2():\n    pass\ndef a_func1():\n    pass\n')
         self.assertEquals('a_func2', nodes[0].get_name())
         self.assertEquals('a_func1', nodes[1].get_name())
 
@@ -47,6 +49,12 @@ class OutlineTest(unittest.TestCase):
               'class Derived(Base):\n    pass\n'
         nodes = self.outline.get_root_nodes(src)
         self.assertEquals(0, len(nodes[1].get_children()))
+
+    def test_node_kind(self):
+        src = 'class C(object):\n    pass\ndef f():\n    pass\n'
+        nodes = self.outline.get_root_nodes(src)
+        self.assertEquals('class', nodes[0].get_kind())
+        self.assertEquals('function', nodes[1].get_kind())
 
 
 if __name__ == '__main__':
