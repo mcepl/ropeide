@@ -16,6 +16,7 @@ import ropeidetest.outlinetest
 import ropeidetest.spellcheckertest
 import ropeidetest.movementstest
 import ropeidetest.sorttest
+import ropeidetest.templatestest
 
 
 def suite():
@@ -35,6 +36,7 @@ def suite():
     result.addTests(unittest.makeSuite(ropeidetest.outlinetest.OutlineTest))
     result.addTests(ropeidetest.movementstest.suite())
     result.addTests(unittest.makeSuite(ropeidetest.sorttest.SortScopesTest))
+    result.addTests(unittest.makeSuite(ropeidetest.templatestest.TemplateTest))
     return result
 
 
