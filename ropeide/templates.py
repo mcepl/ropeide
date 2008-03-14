@@ -50,6 +50,14 @@ class Template(object):
         return start
 
 
+class TemplateProposal(object):
+
+    def __init__(self, name, template):
+        self.name = name
+        self.kind = 'template'
+        self.template = template
+
+
 def default_templates():
     templates = {}
     templates['main'] = Template("if __name__ == '__main__':\n    ${cursor}\n")

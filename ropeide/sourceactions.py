@@ -10,7 +10,7 @@ import ropeide.sort
 import ropeide.testview
 from rope.base import codeanalyze
 from rope.contrib import generate
-from ropeide import spelldialog, registers
+from ropeide import spelldialog, registers, templates
 from ropeide.actionhelpers import ConfirmEditorsAreSaved, StoppableTaskRunner
 from ropeide.extension import SimpleAction
 from ropeide.menubar import MenuAddress
@@ -64,7 +64,7 @@ class _CompletionListHandle(EnhancedListHandle):
 
     def entry_to_string(self, proposal):
         mode = '  '
-        if isinstance(proposal, rope.contrib.codeassist.TemplateProposal):
+        if isinstance(proposal, templates.TemplateProposal):
             mode = 'T_'
         if isinstance(proposal, rope.contrib.codeassist.CompletionProposal):
             if proposal.type is None:
@@ -77,7 +77,7 @@ class _CompletionListHandle(EnhancedListHandle):
         self.toplevel.destroy()
 
     def selected(self, selected):
-        if isinstance(selected, rope.contrib.codeassist.TemplateProposal):
+        if isinstance(selected, templates.TemplateProposal):
             _get_template_information(self.editor, selected, self.start_offset)
         else:
             self.editor.text.delete('0.0 +%dc' % self.start_offset,
@@ -98,9 +98,10 @@ class DoCodeAssist(object):
         offset = editor.get_current_offset()
         maxfixes = context.core.get_prefs().get('codeassist_maxfixes', 1)
         result = rope.contrib.codeassist.code_assist(
-            context.project, source, offset, context.resource,
-            templates=self._get_templates(context), maxfixes=maxfixes)
+            context.project, source, offset, context.resource, maxfixes=maxfixes)
         proposals = rope.contrib.codeassist.sorted_proposals(result)
+        expression = rope.contrib.codeassist.starting_expression(source, offset)
+        proposals.extend(self._get_templates(context, expression))
         start_offset = rope.contrib.codeassist.starting_offset(source, offset)
         toplevel = Tkinter.Toplevel()
         toplevel.title('Code Assist Proposals')
@@ -138,14 +139,19 @@ class DoCodeAssist(object):
 
     _templates = None
 
-    def _get_templates(self, context):
+    def _get_templates(self, context, expression):
         if self._templates is None:
-            templates = rope.contrib.codeassist.default_templates()
+            _templates = templates.default_templates()
             for name, definition in (context.core.get_prefs().
-                                     get('templates', [])):
-                templates[name] = rope.contrib.codeassist.Template(definition)
-            self._templates = templates
-        return self._templates
+                                     get('_templates', [])):
+                _templates[name] = templates.Template(definition)
+            self._templates = _templates
+        result = []
+        if '.' not in expression:
+            for name, template in self._templates.items():
+                if name.startswith(expression.strip()):
+                    result.append(templates.TemplateProposal(name, template))
+        return result
 
 
 def _get_template_information(editor, proposal, start_offset):
