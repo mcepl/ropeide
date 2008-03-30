@@ -33,6 +33,22 @@ class GraphicalEditor(object):
         self.text.bind('<<Modified>>', self._editor_modified)
         self.text.edit_modified(False)
 
+
+    def indent_block(self):
+        start, end = self._get_region_index()
+        start_line = self._get_line_from_index(start)
+        end_line = self._get_line_from_index(end)
+        for curr_line in xrange (start_line, end_line):
+            self.indenter.indent(curr_line)
+
+    def deindent_block(self):
+        start, end = self._get_region_index()
+        start_line = self._get_line_from_index(start)
+        end_line = self._get_line_from_index(end)
+        for curr_line in xrange (start_line, end_line):
+            self.indenter.deindent(curr_line)
+
+
     def _text_changed(self):
         if not self.change_inspector.is_changed():
             return

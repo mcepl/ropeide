@@ -212,6 +212,14 @@ class PrevNextElement(object):
         else:
             return elements.prev(offset)
 
+def indent_block(context):
+    if context.get_active_editor():
+        context.editor.indent_block()
+
+def deindent_block(context):
+    if context.get_active_editor():
+        context.editor.deindent_block()
+
 
 core = ropeide.core.Core.get_core()
 core.add_menu_cascade(MenuAddress(['Edit'], 'e'), ['all', 'none'])
@@ -219,6 +227,14 @@ actions = []
 
 others = MenuAddress(['Edit', 'Others'], 'o', 0)
 core.add_menu_cascade(others, ['all'])
+
+actions.append(SimpleAction('indent_block', indent_block, 'C-x i',
+                            MenuAddress(['Edit', 'Indent Block'], 'i',4), ['all','none']))
+
+actions.append(SimpleAction('deindent_block', deindent_block, 'C-x d',
+                            MenuAddress(['Edit', 'De-indent Block'], 'd',4), ['all','none']))
+
+
 
 actions.append(SimpleAction('next_word', next_word, 'M-f',
                             others.child('Next Word'), ['all']))
