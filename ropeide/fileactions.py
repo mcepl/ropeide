@@ -404,8 +404,9 @@ def _confirm_action(title, message, action):
         toplevel.destroy()
     def cancel(event=None):
         toplevel.destroy()
-    ok_button = Tkinter.Button(frame, text='OK', command=ok)
-    cancel_button = Tkinter.Button(frame, text='Cancel', command=cancel)
+    ok_button = Tkinter.Button(frame, text='OK', command=ok, width=15)
+    cancel_button = Tkinter.Button(frame, text='Cancel',
+                                   command=cancel, width=15)
     ok_button.grid(row=1, column=0)
     toplevel.bind('<Return>', lambda event: ok())
     toplevel.bind('<Escape>', lambda event: cancel())
