@@ -3,6 +3,18 @@
 ===========
 
 
+> Public Release 1.5.1 : April 5, 2008
+
+
+- Indent/deindent lines : March 31
+
+
+- Not using `rope.contrib.codeassist` templates : March 14
+
+
+- Enhancing indenter module : January 29, 2008
+
+
 - Added usefunction refactoring : January 29, 2008
 
 
