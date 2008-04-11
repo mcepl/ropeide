@@ -1,17 +1,16 @@
-===============
- Rope Tutorial
-===============
+==================
+ Ropeide Tutorial
+==================
 
 .. contents::
 
 Overview
 ========
 
-This tutorial merely tries to demonstrate how to use some of rope's
-features.  This tutorial attempts to give a fast overview of rope and
-some of its basic features.  It covers things like opening projects,
-creating and editing files.  Read `where to go next`_ section for more
-information.
+This tutorial merely tries to demonstrate how to use some of
+ropeides's features.  This tutorial attempts to give a fast overview
+of ropeide and some of its basic features.  Read `where to go next`_
+section for more information.
 
 
 Starting Ropeide
@@ -63,7 +62,7 @@ File.New File         folder1/folder2     file3.txt
 
 Note that for making ``file3.txt`` we've used ``/`` as a directory
 separator.  You should always use ``/`` as directory separator
-regardless of the operating system you are running rope on.
+regardless of the operating system you are running ropeide on.
 
 
 Making Modules and Packages
@@ -121,8 +120,8 @@ Use ``C-x C-s`` to save the contents of the active editor.
 Changing Editor
 ===============
 
-With rope you can open and edit many files at the same time.  To switch
-between open editors you can use ``C-x b``.
+With ropeide you can open and edit many files at the same time.  To
+switch between open editors you can use ``C-x b``.
 
 
 Closing An Editor
@@ -134,7 +133,7 @@ Use ``C-x k`` to close active editor.
 Emacs Keybindings
 =================
 
-*rope* uses emacs keybindings most of the time.  For example in most of
+*ropeide* uses emacs keybindings most of the time.  For example in most of
 the dialogs like ``code assist`` or ``outline`` you can use ``C-n``
 and ``C-p`` to move over the items.
 
@@ -154,7 +153,7 @@ For pasting move the cursor to the place you want to paste and press
 Undoing Actions
 ===============
 
-Rope comes with two kinds of undo/redos.
+Ropeide comes with two kinds of undo/redos.
 
 * Undo/redoing editing
 
@@ -178,9 +177,9 @@ highlighted.
 Editing Python Files
 ====================
 
-Rope considers all ``*.py`` files to be python files.  It highlights
-them and makes features like auto-completion, goto definition,
-show doc, quick outline, refactorings and ... available.
+Ropeide considers all ``*.py`` files to be python files.  It
+highlights them and makes features like auto-completion, goto
+definition, show doc, quick outline, refactorings and ... available.
 
 
 Keybinding
@@ -217,15 +216,15 @@ In the second column if present:
 
 You can use ``main``, ``testcase``, ``hash``, ``eq`` and ``super``
 templates.  You can define your own templates in ``~/.ropeide``.  See
-examples in the default ``~/.ropeide`` file. (`rope.ui.dot_rope`
+examples in the default ``~/.ropeide`` file. (`ropeide.ui.dot_ropeide`
 module; It will be copied to ``~/.ropeide`` if none already exists.)
 
 
 Show PyDoc
 ==========
 
-By using ``C-c C-d`` you can tell rope to show the pydoc of a name if
-available.
+By using ``C-c C-d`` you can tell ropeide to show the pydoc of a name
+if available.
 
 
 Goto Definition
@@ -275,9 +274,9 @@ instance, you can use ``C-c s a`` followed by ``C-c s k``.
 Saving Locations And Strings
 ============================
 
-Rope can now save locations or strings in memory.  These are similar
-to emacs's bookmarks and registers.  These actions use ``C-x m``
-prefix.
+Ropeide can now save locations or strings in memory.  These are
+similar to emacs's bookmarks and registers.  These actions use ``C-x
+m`` prefix.
 
 
 Defining Templates
@@ -323,11 +322,11 @@ changes in project history undoes the changes it depends on, too.
 Where To Go Next
 ================
 
-The best way to learn about rope features is to use the features.  Have
-a look and try menu items.  The default keybinding for each menu item
-is written in front of them.  For example `Code` menu contains the
-entry `Code Assist (Auto-Complete) M-slash`.  This means you can use
-rope's auto-complete feature by pressing `alt` and `/` keys.  Note
-that some of the menu items disappear when you're not editing a file
-suitable for performing that action.  For example code assist command
-is only active when editing a python file.
+The best way to learn about ropeide features is to use the features.
+Have a look and try menu items.  The default keybinding for each menu
+item is written in front of them.  For example `Code` menu contains
+the entry `Code Assist (Auto-Complete) M-slash`.  This means you can
+use ropeide's auto-completion feature by pressing `alt` and `/` keys.
+Note that some of the menu items disappear when you're not editing a
+file suitable for performing that action.  For example code assist
+command is only active when editing a python file.
