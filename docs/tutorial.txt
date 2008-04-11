@@ -319,6 +319,50 @@ see and select changes to be undone in any order.  Note that undoing
 changes in project history undoes the changes it depends on, too.
 
 
+``.ropeproject`` Folder
+=======================
+
+Rope uses a folder inside projects for holding project configuration
+and data.  Its default name is ``.ropeproject``, but it can be changed
+in ``~/.ropeide``.
+
+There is a ``config.py`` file in this folder in which you can change
+project configurations.  Have look at the default ``config.py`` file
+(is created when it does not exist) for more information.  (``C-x p
+c`` open this file automatically).
+
+
+Change Method Signature
+=======================
+
+In the change method signature dialog these shortcuts work:
+
+======  ======================
+key     binding
+======  ======================
+C-n     move downward
+C-p     move upward
+M-n     move parameter down
+M-p     move parameter up
+M-r     remove parameter
+M-a     add new parameter
+======  ======================
+
+The ``value`` field in add new parameter dialog changes all calls
+to pass ``value`` as this new parameter if it is non-empty.  You
+can do the same thing for existing arguments using inline argument
+default value.
+
+Inline argument default changes all function calls that don't pass any
+value as this argument to pass the default value specified in function
+definition.
+
+While reordering arguments you should consider the python
+language order for argument types (i.e. : normal args, args with
+defaults, ``*args``, ``**keywords``).  Rope won't complain if you
+don't but python will.
+
+
 Where To Go Next
 ================
 
