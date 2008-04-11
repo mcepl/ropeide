@@ -19,12 +19,6 @@ You should install `rope`_ library before using this IDE.
 New Features
 ============
 
-* added usefunction refactoring
-* indent/deindent lines
-* not using a deprecated templates in codeassist
-* better help files finding
-* indenter module was improved
-
 
 Getting Started
 ===============
