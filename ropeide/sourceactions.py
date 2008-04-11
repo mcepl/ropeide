@@ -488,11 +488,11 @@ actions.append(SimpleAction('comment_region', comment_region, 'C-c C-c',
 run = MenuAddress(['Source', 'Run'], 'r', 2)
 core.add_menu_cascade(run, ['python'])
 actions.append(SimpleAction('run_module', do_run_module, 'C-c x p',
-                            run.child('Run Module', 'm'), ['python']))
+                            run.child('Run Module (DOA)', 'm'), ['python']))
 actions.append(SimpleAction('run_unit_tests', run_tests, 'C-c x t',
                             run.child('Run Unit Tests', 't'), ['python']))
 actions.append(SimpleAction('run_soi', run_soi, 'C-c x s',
-                            run.child('Run SOI On Module', 's'), ['python']))
+                            run.child('Analyze Module (SOA)', 's'), ['python']))
 
 annotes = MenuAddress(['Source', 'Annotations'], 'a', 2)
 core.add_menu_cascade(annotes, ['python'])
