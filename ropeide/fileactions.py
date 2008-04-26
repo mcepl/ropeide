@@ -245,47 +245,6 @@ def find_file(context):
                      matches='Matching Files')
 
 
-class FindTypeHandle(uihelpers.FindItemHandle):
-
-    def __init__(self, context):
-        self.core = context.core
-        self.pycore = context.project.get_pycore()
-        self.matcher = None
-
-    def find_matches(self, starting):
-        """Returns the Files in the project whose names starts with starting"""
-        if self.matcher is None:
-            @simple_stoppable('Finding Classes')
-            def calculate(handle):
-                return self.pycore.get_classes(handle)
-            types = list(calculate())
-            types.sort(cmp=self._compare_types)
-            self.matcher = HelperMatcher(types, DoesMatch(self._to_search_text))
-        return self.matcher.find_matches(starting)
-
-    def _to_search_text(self, entry):
-        return entry.get_name()
-
-    def selected(self, pyclass):
-        editor_manager = self.core.get_editor_manager()
-        pymodule = pyclass.get_module()
-        file_editor = editor_manager.get_resource_editor(
-            pymodule.get_resource())
-        file_editor.get_editor().goto_line(pyclass.get_ast().lineno)
-
-    def to_string(self, pyclass):
-        return '%s: %s' % (pyclass.get_module().get_resource().path,
-                           pyclass.get_name())
-
-    def _compare_types(self, type1, type2):
-        return cmp(type1.get_name(), type2.get_name())
-
-def find_type(context):
-    if not ropeide.actionhelpers.check_project(context.core):
-        return
-    find_item_dialog(FindTypeHandle(context), title='Find Project Type',
-                     matches='Matching Types')
-
 class _ResourceViewHandle(TreeViewHandle):
 
     def __init__(self, core, toplevel):
@@ -507,8 +466,6 @@ actions.append(SimpleAction('close_project', close_project, 'C-x p k',
 
 actions.append(SimpleAction('find_file', find_file, 'C-x C-f',
                             MenuAddress(['File', 'Find File...'], 'f', 1)))
-actions.append(SimpleAction('find_type', find_type, 'C-x C-t',
-                            MenuAddress(['File', 'Find Type...'], None, 1)))
 core.add_menu_cascade(MenuAddress(['File', 'New'], 'n', 1), ['all', 'none'])
 actions.append(SimpleAction('create_file', create_file, 'C-x n f',
                             MenuAddress(['File', 'New', 'New File...'], 'f')))

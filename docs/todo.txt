@@ -42,3 +42,4 @@ TODO
 
 * auto-importing names
 * using resources parameter of refactorings
+* add find global command instead of the removed find type
