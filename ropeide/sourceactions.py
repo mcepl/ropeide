@@ -1,15 +1,16 @@
 import ScrolledText
 import Tkinter
-
 import rope.contrib.codeassist
+import rope.contrib.findit
+from rope.base import codeanalyze
+from rope.contrib import generate
+
 import ropeide.core
 import ropeide.formatter
 import ropeide.notes
 import ropeide.outline
 import ropeide.sort
 import ropeide.testview
-from rope.base import codeanalyze
-from rope.contrib import generate
 from ropeide import spelldialog, registers, templates
 from ropeide.actionhelpers import ConfirmEditorsAreSaved, StoppableTaskRunner
 from ropeide.extension import SimpleAction
@@ -287,7 +288,7 @@ def find_occurrences(context):
     resource = context.resource
     offset = context.editor.get_current_offset()
     def calculate(handle):
-        return rope.contrib.codeassist.find_occurrences(
+        return rope.contrib.findit.find_occurrences(
             context.project, resource, offset,
             unsure=True, task_handle=handle)
     result = StoppableTaskRunner(calculate, title='Finding Occurrences')()
